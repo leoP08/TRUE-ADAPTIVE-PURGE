@@ -62,14 +62,13 @@ Lúc này macro sẽ dựa vào điểm in đầu tiên (đã xác định bằn
 
 # YÊU CẦU CẦN THIẾT
 
-1. Cài đặt `Python` nếu chưa có.
-    * Vào trang [Python](https://www.python.org/), tải và cài đặt.
+1. Vào trang [Python](https://www.python.org/), tải và cài đặt (nếu chưa có).
     <p align="center">
     <img src="./IMG/InstallPython.jpg" width="420">
     </p>
 
-2. Trong file `moonraker.conf` "enable_object_processing" được đặt là `True`,<br>
-hoặc có thể thêm dòng dưới đây nếu chưa có:
+2. Trong file `moonraker.conf` 
+    * "<i>enable_object_processing</i>" được đặt là `True`, hoặc có thể thêm dòng dưới đây nếu chưa có:
   
     ```yaml
     [file_manager]
@@ -79,33 +78,35 @@ hoặc có thể thêm dòng dưới đây nếu chưa có:
 3. `[exclude_object]` được thiết lập trong file `printer.cfg`.
 
 4. Vẫn trong file `printer.cfg`, ở mục `[extruder]`.<br>
-mục "max_extrude_cross_section" phải được set ít nhất là `5`. <br>
-Nếu chưa có mục "max_extrude_cross_section" thì có thể thêm vào.
+    * "<i>max_extrude_cross_section</i>" phải được set ít nhất là `5`. <br>
+    > Note: Nếu chưa có mục "max_extrude_cross_section" thì có thể thêm vào.
 
 # HƯỚNG DẪN CÀI ĐẶT
 1. Đầu tiên tải file `Find_First_Point.py` về, đây là file script sẽ dùng để đọc gcode.
 
 2. Thiết lập cho phần mềm Slicer.<br>
-    <i>(ở đây mình sử dụng Orca Slicer nhưng với ai sử dụng Prusa Slicer thì cũng gần như tương tự)</i>
+    <i>(ở đây mình sử dụng `Orca Slicer` nhưng với ai sử dụng Prusa Slicer thì cũng gần như tương tự)</i>
 
     * Ở bảng chỉnh thông số in, vào tab `OTHER`
-    * Đầu tiên là tích vào `labeling objects` nếu chưa được tích.
-
+    * Đầu tiên là tích vào `Labeling objects` nếu chưa được tích.
+        
+        <br>
         <p align="center">
         <img src="./IMG/Orca_LabelObject.jpg" width="480">
         </p>
 
         <p align="center"> <i> Thiết lập trong Orca Slicer.</i></p>
 
-    * Cũng trong bảng `OTHER` Kéo xuống dưới ở mục `Post-Processing Scripts`, điền vào đường dẫn tới file `Python.exe` và `Find_First_Point.py`:
+    * Cũng trong bảng `OTHER`, kéo xuống dưới ở mục `Post-Processing Scripts`, điền vào đường dẫn tới file `Python.exe` và `Find_First_Point.py`:
 
         ```
         "DUONG-DAN-DEN-PYTHON\python.exe" "DUONG-DAN-DEN-SCRIPT\Find_First_Point.py";
         ```
 
         > **Note:** chú ý phải có dấu (") hai đầu và phải có đoạn cách giữa hai đường dẫn để phần mềm có thể đọc được.<br>
-        > File `Python.exe` có thể tìm thấy ở thư mục cài hoặc có thể dán đường dẫn này vào explorer để tìm `%USERPROFILE%\AppData\Local\Microsoft\WindowsApps`
+        > File `Python.exe` có thể tìm thấy ở thư mục cài hoặc thường sẽ nằm trong đây `%USERPROFILE%\AppData\Local\Microsoft\WindowsApps`, dán vào windows explorer để tìm.
 
+        <br>
         <p align="center">
         <img src="./IMG/Orca_Script.jpg" width="460">
         </p>
@@ -116,29 +117,31 @@ Nếu chưa có mục "max_extrude_cross_section" thì có thể thêm vào.
 
         Ở mục `Machine start G-code` thêm dòng `; Adaptive Purge` vào dưới cùng, (Trong hình mình có mỗi PRINT_START nhưng nếu mọi người có nhiều hơn thì cũng cho dòng `; Adaptive Purge` vào dưới cùng)
 
+        <br>
         <p align="center">
         <img src="./IMG/Orca_PrinterGcode.jpg" width="480">
         </p>
     
-        Nên chú ý có dấu `;` phía trước.<br>
-        Đoạn code này máy in sẽ không đọc mà bỏ qua, nhưng script sẽ dùng đoạn này như mốc để xác định đâu là đoạn code sau giai đoạn chuẩn bị của máy in (làm nóng, home, làm sạch đầu in...) và trước khi phần in thực sự bắt đầu.<br>
+        Nên chú ý có dấu `;` phía trước để máy in sẽ không đọc mà bỏ qua.<br>
+        Script sẽ dùng đoạn này như mốc để xác định đâu là đoạn code sau giai đoạn chuẩn bị của máy in (làm nóng, home, làm sạch đầu in...) và trước khi phần in thực sự bắt đầu.<br>
 
         > **Note:** Mình đã thử tìm một số điểm làm mốc khác để đơn giản hơn giai đoạn thiết lập script nhưng phần đầu trước khi in này sẽ thay đổi nhiều tùy vào nhiều thết lập trong slicer nên để chắc chắn chính xác đoạn cần chèn thên script thì tạo một mốc đặc trưng như thế này sẽ là cách tối ưu.<br>
 
-    * Cuối cùng. Sau khi thực hiện các công đoạn cài đặt thì nhớ SAVE lại để dùng sau này.
+    * Cuối cùng.<br> 
+    Sau khi thực hiện các công đoạn cài đặt thì nhớ SAVE lại để dùng sau này.
 
 3. Thiết lập cho máy in.
 
-    * Copy phần macro trong file `TRUE_ADAPTIVE_PURGE.cfg` và paste vào file `printer.cfg` (hoặc file nào mọi người dùng để lưu macro)<br>
+    * Copy nội dung trong file `TRUE_ADAPTIVE_PURGE.cfg` và paste vào file `printer.cfg` (hoặc file nào mọi người dùng để lưu macro thì dán vào đấy)<br>
     * Hoặc có thể tải cả file về và tạo một mục `[include TRUE_ADAPTIVE_PURGE.cfg]` trong file `printer.cfg`.
 
-    * Khởi động lại klipper để load các file mới.
+    * Khởi động lại `klipper` để load các file mới.
     
 # SỬ DỤNG
 
 * Sau khi cài đặt thì quá trình sử dụng không có khác gì so với trước (vì toàn bộ sẽ tự động chạy).
 
-* Vì quá trình sẽ tự động nên có thể script lỗi mà không có thông báo (hoặc thiết lập không đúng đẫn đến không chạy được). Nên sau khi lưu file .gcode, mở bằng một phần mềm chỉnh sửa text bất kì (vd. notepad), nếu có dòng `_TRUE_ADAPTIVE_PURGE X=xxx Y=yyy` phía dưới dòng `; Adaptive Purge` (như hình) thì tất cả đều ok.
+* Vì quá trình sẽ tự động nên có thể script lỗi mà không có thông báo (hoặc thiết lập không đúng đẫn đến không chạy được). Nên sau khi slice thử file, lưu file .gcode và mở bằng một phần mềm chỉnh sửa text bất kì (vd. notepad), nếu có dòng `_TRUE_ADAPTIVE_PURGE X=xxx Y=yyy` phía dưới dòng `; Adaptive Purge` (như hình) thì tất cả đều ok.
 
 <p align="center">
 <img src="./IMG/final_gcode.jpg" width="480">
@@ -147,14 +150,29 @@ Nếu chưa có mục "max_extrude_cross_section" thì có thể thêm vào.
 * Kéo xuống dưới một đoạn và check tiếp, dòng đầu tiên `G1 X??? Y???` xuất hiện, thông số `X` và `Y` có giống với phía trên không.
 
 <p align="center">
-<img src="./IMG/final_gcode2.jpg" width="420">
+<img src="./IMG/final_gcode2.jpg" width="480">
 </p>
 
 * Về phía máy in, khi in sẽ có tạo một đoạn Purge-Line nhỏ tầm 10mm cạnh đối tượng in, và ở `Console` (vd như ở đây mình dùng Mainsail) sẽ có dòng log như này.
 
 <p align="center">
-<img src="./IMG/final_mainsail-consol.jpg" width="420">
+<img src="./IMG/final_mainsail-consol.jpg" width="480">
 </p>
+
+* Giải thích về các thông số có thể tùy chỉnh trong Macro.
+    - 
+    - Về cơ bản các thông số sẽ giống với KAMP.
+
+    <p align="center">
+    <img src="./IMG/macro_variables.jpg" width="800">
+    </p>
+    
+    - `verbose_enable`: xuất log ra cửa sổ console
+    - `purge_height`: cao độ đầu in khi in Purge-Line.
+    - `tip_distance`: khoảng cách giữa đầu nhựa và đầu in. Thường sẽ thiết lập bằng khoảng cách sợi nhựa sẽ rút lại lúc kết thúc file in trước.
+    - `purge_margin`: khoảng cách giữa điểm in Purge-Line và đối tượng in.
+    - `purge_amount`: chiều dài sợi nhựa sẽ dùng để Purge.
+    - `flow_rate`: mức độ lưu lượng khi purge. Càng nhiều thì đầu in sẽ càng sạch (theo lý thuyết)
 
 # CÁC LỖI THƯỜNG GẶP
 
